@@ -1,10 +1,12 @@
 // pages/index.tsx
-
-import MoviesPage from '@/app/pages/movies';
-
+import React, { useState } from 'react';
+import MoviesList from './app/components/Movies';
+import Navbar from './components/Navbar';
 const Home = () => {
   return (
-    MoviesPage
+    <div>
+      <MoviesList />
+    </div>
   );
 };
 

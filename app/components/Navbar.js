@@ -1,3 +1,5 @@
+// Navbar.js
+
 import Link from 'next/link';
 
 const Navbar = () => {
@@ -6,12 +8,22 @@ const Navbar = () => {
             <ul>
                 <li>
                     <Link href="/">
-                        <a>Home</a>
+                        Home
                     </Link>
                 </li>
                 <li>
-                    <Link href="/movies">
-                        <a>Movies</a>
+                    <Link href="/editmovies">
+                        Edit Movies
+                    </Link>
+                </li>
+                <li>
+                    <Link href="/removemovies">
+                        Remove Movies
+                    </Link>
+                </li>
+                <li>
+                    <Link href="/addmovies">
+                        Add Movies
                     </Link>
                 </li>
             </ul>
