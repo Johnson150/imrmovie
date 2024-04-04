@@ -1,18 +1,33 @@
-// pages/index.js
-
-import React from 'react';
-import MongoDBComponent from '../app/components/Movies'; // Import MongoDBComponent
+import React, { useState, useEffect } from 'react';
 import Navbar from '../app/components/Navbar';
 import Footer from '../app/components/Footer';
-// Remove one of the default exports named Home
-export default function Home({ data }) {
+import Movies from '../app/components/Movies';
+
+export default function Home() {
+
+  const handleDeleteEntry = async (id) => {
+    const response = await fetch('/api/deleteEntry', {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ id }),
+    });
+    const data = await response.json();
+    if (response.ok) {
+      // Remove the deleted entry from the entries list
+      setEntries(entries.filter((entry) => entry._id !== id));
+    } else {
+      console.error(data.error);
+    }
+  };
+
   return (
     <div>
       <h1>IMR movie App</h1>
       <Navbar />
+      <Movies onDeleteEntry={handleDeleteEntry}/>
       <Footer />
-
-      <MongoDBComponent data={data} /> {/* Use MongoDBComponent and pass data as props */}
     </div>
   );
 }

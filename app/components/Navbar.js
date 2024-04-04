@@ -17,11 +17,6 @@ const Navbar = () => {
                     </Link>
                 </li>
                 <li>
-                    <Link href="/removemovies">
-                        Remove Movies
-                    </Link>
-                </li>
-                <li>
                     <Link href="/addmovies">
                         Add Movies
                     </Link>
