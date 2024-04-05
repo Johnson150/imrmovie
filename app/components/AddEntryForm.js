@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 
 const AddEntryForm = ({ onAddEntry }) => {
-  
+
   const [title, setTitle] = useState('');
   const [actors, setActors] = useState('');
   const [releaseYear, setReleaseYear] = useState('');
