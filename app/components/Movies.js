@@ -22,16 +22,16 @@ const Movies = () => {
   };
 
   // Client-side code
-const onDeleteEntry = async (id) => {
-  try {
-    console.log('before');
-    await axios.delete(`/api/movies`, { data: { id } });
-    console.log('success');
-    setDeletedCount((prevCount) => prevCount + 1);
-  } catch (error) {
-    console.error('Error deleting entry:', error);
-  }
-};
+  const onDeleteEntry = async (id) => {
+    try {
+      console.log('before');
+      await axios.delete(`/api/movies`, { data: { id } });
+      console.log('success');
+      setDeletedCount((prevCount) => prevCount + 1);
+    } catch (error) {
+      console.error('Error deleting entry:', error);
+    }
+  };
 
 
   // Function to handle editing a movie

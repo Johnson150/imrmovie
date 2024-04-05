@@ -1,23 +1,40 @@
-// pages/api/movies.js
+import { MongoClient, ObjectId } from 'mongodb';
 
 export default async function handler(req, res) {
-  // Set CORS headers
-  res.setHeader('Access-Control-Allow-Origin', '*'); // Allow requests from any origin
-  res.setHeader('Access-Control-Allow-Methods', 'DELETE, OPTIONS'); // Allow DELETE requests
-  
-  // Handle preflight requests
-  if (req.method === 'OPTIONS') {
-    res.status(200).end();
-    return;
-  }
+  const client = new MongoClient(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
 
-  // Handle DELETE request
-  if (req.method === 'DELETE') {
-    // Delete movie logic
-    res.status(200).json({ message: 'Movie deleted successfully' });
-  } else {
-    // Handle unsupported methods
-    res.setHeader('Allow', ['DELETE']);
-    res.status(405).end(`Method ${req.method} Not Allowed`);
+  try {
+    await client.connect();
+    const database = client.db('IMR');
+    const collection = database.collection('movies');
+
+    if (req.method === 'DELETE') {
+      const { id } = req.body;
+
+      // Check if `id` is a valid ObjectId
+      const isValidObjectId = ObjectId.isValid(id);
+      if (!isValidObjectId) {
+        return res.status(400).json({ error: 'Invalid ObjectId', id });
+      }
+
+      // Delete the entry from the database
+      const result = await collection.deleteOne({ _id: new ObjectId(id) });
+
+      if (result.deletedCount === 1) {
+        res.status(200).json({ message: 'Entry deleted successfully' });
+      } else {
+        res.status(404).json({ error: 'Entry not found' });
+      }
+    } else {
+      res.status(405).json({ error: 'Method Not Allowed' });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  } finally {
+    await client.close();
   }
 }

@@ -3,11 +3,13 @@ import Navbar from '../app/components/Navbar';
 import Footer from '../app/components/Footer';
 import Movies from '../app/components/Movies';
 import AddEntryForm from '../app/components/AddEntryForm';
-import EditEntryForm from '../app/components/EditEntryForm'; // Import EditEntryForm component
+import EditEntryForm from '../app/components/EditEntryForm';
+import DeleteEntryForm from '../app/components/DeleteEntryForm'; // Import DeleteEntryForm component
 
 const Home = () => {
   const [entries, setEntries] = useState([]);
   const [selectedEntry, setSelectedEntry] = useState(null); // State to store the selected entry for editing
+  const [isDeleteFormVisible, setIsDeleteFormVisible] = useState(false); // State to manage delete form visibility
 
   const handleDeleteEntry = async (id) => {
     const response = await fetch('/api/deleteEntry', {
@@ -44,13 +46,16 @@ const Home = () => {
     setSelectedEntry(null); // Clear the selected entry
   };
 
-  // Function to handle updating the entry
-  const handleUpdateEntry = (updatedEntry) => {
-    // Find the index of the updated entry in the entries array
-    const updatedEntries = entries.map(entry => entry._id === updatedEntry._id ? updatedEntry : entry);
-    setEntries(updatedEntries);
-    // After updating, clear the selected entry
-    setSelectedEntry(null);
+  // Function to handle showing the delete form
+  const handleShowDeleteForm = (entry) => {
+    setSelectedEntry(entry); // Set the selected entry for deletion
+    setIsDeleteFormVisible(true); // Show the delete form
+  };
+
+  // Function to handle canceling the delete
+  const handleCancelDelete = () => {
+    setSelectedEntry(null); // Clear the selected entry
+    setIsDeleteFormVisible(false); // Hide the delete form
   };
 
   return (
@@ -59,14 +64,27 @@ const Home = () => {
       <Navbar />
       <AddEntryForm onAddEntry={handleAddEntry} />
       {/* Conditionally render EditEntryForm if selectedEntry is not null */}
-      {selectedEntry && (
+      {selectedEntry && !isDeleteFormVisible && (
         <EditEntryForm
           entry={selectedEntry}
           onUpdateEntry={handleUpdateEntry}
           onCancel={handleCancelEdit}
         />
       )}
-      <Movies entries={entries} onDeleteEntry={handleDeleteEntry} onEditEntry={handleEditEntry} />
+      {/* Conditionally render DeleteEntryForm if selectedEntry is not null */}
+      {selectedEntry && isDeleteFormVisible && (
+        <DeleteEntryForm
+          entry={selectedEntry}
+          onDeleteEntry={handleDeleteEntry}
+          onCancel={handleCancelDelete}
+        />
+      )}
+      <Movies
+        entries={entries}
+        onDeleteEntry={handleDeleteEntry}
+        onEditEntry={handleEditEntry}
+        onDeleteEntryForm={handleShowDeleteForm} // Pass the function to show the delete form
+      />
       <Footer />
     </div>
   );
