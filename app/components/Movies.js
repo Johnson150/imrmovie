@@ -21,14 +21,18 @@ const Movies = () => {
     }
   };
 
-  const onDeleteEntry = async (id) => {
-    try {
-      await axios.delete(`/api/deleteEntry/${id}`);
-      setDeletedCount((prevCount) => prevCount + 1); // Trigger re-fetch after deletion
-    } catch (error) {
-      console.error('Error deleting entry:', error);
-    }
-  };
+  // Client-side code
+const onDeleteEntry = async (id) => {
+  try {
+    console.log('before');
+    await axios.delete(`/api/movies`, { data: { id } });
+    console.log('success');
+    setDeletedCount((prevCount) => prevCount + 1);
+  } catch (error) {
+    console.error('Error deleting entry:', error);
+  }
+};
+
 
   // Function to handle editing a movie
   const handleEditMovie = (movie) => {
@@ -71,9 +75,9 @@ const Movies = () => {
             <strong>Title:</strong> {movie.title}<br />
             <strong>Actors:</strong> {movie.actors.join(', ')}<br />
             <strong>Release Year:</strong> {movie.release_year}<br />
-            <button onClick={() => onDeleteEntry(movie._id)}>Delete</button>
             {/* Use handleEditMovie function when the edit button is clicked */}
             <button onClick={() => handleEditMovie(movie)}>Edit</button>
+            <button onClick={() => onDeleteEntry(movie._id)}>Delete</button>
             <br />
           </li>
         ))}
