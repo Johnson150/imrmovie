@@ -18,7 +18,7 @@ const EditEntryForm = ({ entry, onUpdateEntry, onCancel }) => {
         const url = '/api/editEntry';
         const method = 'PUT';
         const body = JSON.stringify({
-            id: entry._id, // Assuming entry has an _id field for MongoDB
+            id: entry._id,
             title,
             actors: actors.split(',').map(actor => actor.trim()),
             release_year: parseInt(releaseYear)
@@ -34,8 +34,7 @@ const EditEntryForm = ({ entry, onUpdateEntry, onCancel }) => {
             });
             const data = await response.json();
             if (response.ok) {
-                onUpdateEntry(data.entry); // Notify parent component about the updated entry
-                // Optionally, you can perform additional actions after updating
+                onUpdateEntry(data.entry);
                 console.log('Entry updated successfully:', data.entry);
             } else {
                 console.error(data.error);

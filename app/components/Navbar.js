@@ -12,13 +12,8 @@ const Navbar = () => {
                     </Link>
                 </li>
                 <li>
-                    <Link href="/editmovies">
-                        Edit Movies
-                    </Link>
-                </li>
-                <li>
-                    <Link href="/addmovies">
-                        Add Movies
+                    <Link href="/movies">
+                        Movies
                     </Link>
                 </li>
             </ul>

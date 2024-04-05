@@ -34,32 +34,26 @@ const Movies = () => {
   };
 
 
-  // Function to handle editing a movie
+
   const handleEditMovie = (movie) => {
-    setSelectedMovie(movie); // Set the selected movie for editing
-    setIsEditFormVisible(true); // Show the edit form
+    setSelectedMovie(movie);
+    setIsEditFormVisible(true);
   };
 
-  // Function to handle saving the edited movie
   const handleSaveEditedMovie = async (updatedEntry) => {
     try {
       await axios.put(`/api/editEntry/${updatedEntry._id}`, updatedEntry);
-      // You can handle success or error response here
-      // For example, display a message or update the UI
       console.log('Movie updated successfully:', updatedEntry);
-      // Refresh the data after saving the updated entry
       fetchData();
-      // Close the edit form
       handleCancelEdit();
     } catch (error) {
       console.error('Error updating movie:', error);
     }
   };
 
-  // Function to handle canceling the edit
   const handleCancelEdit = () => {
-    setSelectedMovie(null); // Clear the selected movie
-    setIsEditFormVisible(false); // Hide the edit form
+    setSelectedMovie(null);
+    setIsEditFormVisible(false);
   };
 
   if (!data || !Array.isArray(data)) {
@@ -75,14 +69,12 @@ const Movies = () => {
             <strong>Title:</strong> {movie.title}<br />
             <strong>Actors:</strong> {movie.actors.join(', ')}<br />
             <strong>Release Year:</strong> {movie.release_year}<br />
-            {/* Use handleEditMovie function when the edit button is clicked */}
             <button onClick={() => handleEditMovie(movie)}>Edit</button>
             <button onClick={() => onDeleteEntry(movie._id)}>Delete</button>
             <br />
           </li>
         ))}
       </ul>
-      {/* Conditionally render the edit form */}
       {isEditFormVisible && selectedMovie && (
         <EditEntryForm
           entry={selectedMovie}
