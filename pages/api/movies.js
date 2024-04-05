@@ -14,13 +14,11 @@ export default async function handler(req, res) {
     if (req.method === 'DELETE') {
       const { id } = req.body;
 
-      // Check if `id` is a valid ObjectId
       const isValidObjectId = ObjectId.isValid(id);
       if (!isValidObjectId) {
         return res.status(400).json({ error: 'Invalid ObjectId', id });
       }
 
-      // Delete the entry from the database
       const result = await collection.deleteOne({ _id: new ObjectId(id) });
 
       if (result.deletedCount === 1) {

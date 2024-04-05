@@ -6,7 +6,7 @@ import AddEntryForm from '../app/components/AddEntryForm';
 import EditEntryForm from '../app/components/EditEntryForm';
 import DeleteEntryForm from '../app/components/DeleteEntryForm'; // Import DeleteEntryForm component
 
-const Home = () => {
+const Admin = () => {
   const [entries, setEntries] = useState([]);
   const [selectedEntry, setSelectedEntry] = useState(null); // State to store the selected entry for editing
   const [isDeleteFormVisible, setIsDeleteFormVisible] = useState(false); // State to manage delete form visibility
@@ -90,4 +90,4 @@ const Home = () => {
   );
 }
 
-export default Home;
+export default Admin;

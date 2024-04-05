@@ -19,7 +19,7 @@ const DeleteEntryForm = ({ entry, onDeleteEntry, onCancel }) => {
         method: 'DELETE',
       });
       if (response.ok) {
-        onDeleteEntry(entry._id); // Notify parent component about the deleted entry
+        onDeleteEntry(entry._id);
       } else {
         console.error('Error deleting entry:', response.statusText);
       }

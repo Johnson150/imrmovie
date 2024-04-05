@@ -12,8 +12,8 @@ const Navbar = () => {
                     </Link>
                 </li>
                 <li>
-                    <Link href="/movies">
-                        Movies
+                    <Link href="/admin">
+                        Admin
                     </Link>
                 </li>
             </ul>
