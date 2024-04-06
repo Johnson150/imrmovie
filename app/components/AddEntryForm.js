@@ -1,5 +1,3 @@
-
-
 import React, { useState } from 'react';
 
 const AddEntryForm = ({ onAddEntry }) => {
@@ -19,17 +17,19 @@ const AddEntryForm = ({ onAddEntry }) => {
     });
     const data = await response.json();
     if (response.ok) {
-      onAddEntry(data.entry); // Notify parent component about the new entry
+      onAddEntry(data.entry);
       setTitle('');
       setActors('');
       setReleaseYear('');
     } else {
       console.error(data.error);
     }
+    window.location.reload();
   };
 
   return (
     <form onSubmit={handleSubmit}>
+      <h1>Add Form</h1>
       <label>Title:</label>
       <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} required />
 

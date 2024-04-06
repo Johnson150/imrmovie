@@ -14,10 +14,8 @@ export default async function handler(req, res) {
       const database = client.db('IMR');
       const collection = database.collection('movies');
 
-      // Extract data from the request body (assuming it's JSON data)
       const { title, actors, release_year } = req.body;
 
-      // Insert the new entry into the database
       const result = await collection.insertOne({ title, actors, release_year });
       res.status(201).json({ message: 'Entry added successfully', entry: result.ops[0] });
     } catch (err) {

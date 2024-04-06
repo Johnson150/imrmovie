@@ -1,3 +1,5 @@
+// pages/api/editEntry.js
+
 import { MongoClient, ObjectId } from 'mongodb';
 
 export default async function handler(req, res) {
@@ -14,15 +16,13 @@ export default async function handler(req, res) {
         if (req.method === 'PUT') {
             const { id, title, actors, release_year } = req.body;
 
-            // Check if `id` is a valid ObjectId
             const isValidObjectId = ObjectId.isValid(id);
             if (!isValidObjectId) {
                 return res.status(400).json({ error: 'Invalid ObjectId', id });
             }
 
-            // Update the existing entry in the database
             const result = await collection.findOneAndUpdate(
-                { _id: new ObjectId(id) }, // Correct usage of ObjectId
+                { _id: new ObjectId(id) },
                 { $set: { title, actors, release_year } },
                 { returnOriginal: false }
             );

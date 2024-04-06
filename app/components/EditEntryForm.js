@@ -42,6 +42,7 @@ const EditEntryForm = ({ entry, onUpdateEntry, onCancel }) => {
         } catch (error) {
             console.error('Error updating entry:', error);
         }
+        window.location.reload();
     };
 
     return (

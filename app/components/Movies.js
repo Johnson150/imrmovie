@@ -5,12 +5,12 @@ import EditEntryForm from './EditEntryForm';
 const Movies = () => {
   const [data, setData] = useState([]);
   const [deletedCount, setDeletedCount] = useState(0);
-  const [selectedMovie, setSelectedMovie] = useState(null); // State to store the selected movie for editing
-  const [isEditFormVisible, setIsEditFormVisible] = useState(false); // State to manage edit form visibility
+  const [selectedMovie, setSelectedMovie] = useState(null);
+  const [isEditFormVisible, setIsEditFormVisible] = useState(false);
 
   useEffect(() => {
     fetchData();
-  }, [deletedCount]); // Re-fetch data when a deletion occurs
+  }, [deletedCount]);
 
   const fetchData = async () => {
     try {
@@ -21,19 +21,15 @@ const Movies = () => {
     }
   };
 
-  // Client-side code
   const onDeleteEntry = async (id) => {
     try {
-      console.log('before');
       await axios.delete(`/api/movies`, { data: { id } });
-      console.log('success');
       setDeletedCount((prevCount) => prevCount + 1);
+      fetchData();
     } catch (error) {
       console.error('Error deleting entry:', error);
     }
   };
-
-
 
   const handleEditMovie = (movie) => {
     setSelectedMovie(movie);
